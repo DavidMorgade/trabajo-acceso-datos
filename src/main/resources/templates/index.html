@@ -2,12 +2,44 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>XML</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contract Data</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <script th:src="@{/js/scripts.js}" defer></script>
 </head>
 <body>
-
-
+<header>
+    <h1>Contratos Junta de Andalucía</h1>
+</header>
+<main>
+    <section class="search-section">
+        <input type="text" id="search" placeholder="Buscar Contratos...">
+        <label for="search"></label>
+    </section>
+    <section class="contracts-section">
+        <table id="contracts-table">
+            <thead>
+            <tr>
+                <th>NIF</th>
+                <th>Adjudicatario</th>
+                <th>Objeto Generico</th>
+                <th>Objeto</th>
+                <th>Fecha de Adjudicacion</th>
+                <th>Importe</th>
+                <th>Proveedores consutados</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Contract data will be inserted here -->
+            </tbody>
+        </table>
+    </section>
+    <section class="download-section">
+        <button id="download-btn">Download XML</button>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2024 Acceso a Datos - David Morgade Gil</p>
+</footer>
 </body>
 </html>
