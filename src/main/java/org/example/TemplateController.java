@@ -6,15 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class TemplateController {
-    @GetMapping("/template")
+    @GetMapping("/")
     String template() {
-        return "simple-template";
-    }
-
-
-    @GetMapping("variables")
-    String variables(ModelMap model) {
-        model.put("variable", "Hello, World!");
-        return "variable-template";
+        return "index";
     }
 }
