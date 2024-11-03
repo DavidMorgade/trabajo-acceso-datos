@@ -46,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     downloadBtn.addEventListener('click', function () {
         // Logic to download XML from backend
-        window.location.href = '/download/xml';
     });
 
     // Initial render
