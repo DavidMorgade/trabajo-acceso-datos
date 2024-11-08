@@ -1,23 +1,18 @@
 package xml;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.IOException;
 
 public class xmlParser {
 
     private static final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    private NodeList nodeList;
     XPathFactory xPathFactory = XPathFactory.newInstance();
     private Document document;
 
@@ -28,15 +23,26 @@ public class xmlParser {
 
         Document document = xmlParser.getDocument();
 
-        NodeList nodeList = xmlParser.getNodeList();
+        document.getDocumentElement().normalize();
 
-        System.out.println(nodeList.getLength());
 
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            Element element = (Element) nodeList.item(i);
-            System.out.println(element.getTextContent());
+        NodeList nodeList = document.getElementsByTagName("Data");
+
+        for (int i = 8; i < nodeList.getLength(); i++) {
+            String textContent = nodeList.item(i).getTextContent();
+            if (textContent.contains("_")) {
+                System.out.println("0");
+                continue;
+            }
+
+            if (textContent.contains("MENOR")) {
+                System.out.println("--------------------");
+                continue;
+            }
+
+            System.out.println(nodeList.item(i).getTextContent());
+
         }
-
 
     }
 
@@ -53,19 +59,7 @@ public class xmlParser {
             throw new RuntimeException(e);
         }
 
-        String expression = "//Cell/Data[@ss:Type='String' or @ss:Type='DateTime']";
-        this.useXPath(expression, this.document);
 
-    }
-
-    private void useXPath(String expression, Document document) {
-        XPath xpath = xPathFactory.newXPath();
-        try {
-            XPathExpression xPathExpression = xpath.compile(expression);
-            this.nodeList = (NodeList) xPathExpression.evaluate(document, javax.xml.xpath.XPathConstants.NODESET);
-        } catch (XPathExpressionException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 
@@ -73,7 +67,4 @@ public class xmlParser {
         return this.document;
     }
 
-    public NodeList getNodeList() {
-        return this.nodeList;
-    }
 }
