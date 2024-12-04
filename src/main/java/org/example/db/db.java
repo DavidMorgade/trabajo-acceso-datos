@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class db {
     String url = "jdbc:postgresql://localhost:5432/acceso_datos";
@@ -54,14 +55,16 @@ public class db {
         }
     }
 
-    public Contrato getAllContratos() {
+    public ArrayList<Contrato> getAllContratos() {
         Connection conn = this.connect();
         String sql = "SELECT * FROM contratos";
+        ArrayList<Contrato> contratos = new ArrayList<>();
         Contrato contrato = null;
         try {
             ResultSet rs = conn.createStatement().executeQuery(sql);
             while (rs.next()) {
-                contrato = new Contrato(rs.getInt("id"), rs.getString("nif"), rs.getString("adjudicatario"), rs.getString("objeto_generico"), rs.getString("fecha_adjudicacion"), rs.getDouble("importe"), rs.getInt("proveedores_consultados"));
+                contrato = new Contrato(rs.getInt("id"), rs.getString("nif"), rs.getString("adjudicatario"), rs.getString("objeto_generico"), rs.getString("fecha_adjudicacion"), rs.getString("importe"), rs.getInt("proveedores_consultados"));
+                contratos.add(contrato);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,8 +75,8 @@ public class db {
                 e.printStackTrace();
             }
         }
-        System.out.println("Contrato retrieved successfully");
-        return contrato;
+        System.out.println("Contratos retrieved successfully");
+        return contratos;
     }
 
     public void saveContrato(Contrato contrato) {

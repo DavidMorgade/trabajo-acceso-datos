@@ -1,5 +1,7 @@
 package xml;
 
+import org.example.db.Contrato;
+import org.example.db.db;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -9,12 +11,15 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathFactory;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class xmlParser {
 
     private static final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     XPathFactory xPathFactory = XPathFactory.newInstance();
     private Document document;
+    ArrayList<Contrato> contratos = new ArrayList<>();
+    static db db = new db();
 
 
     public static void main(String[] args) {
@@ -28,20 +33,38 @@ public class xmlParser {
 
         NodeList nodeList = document.getElementsByTagName("Data");
 
+        String textContent;
+        Contrato contrato = new Contrato();
+        ArrayList<Object> data = new ArrayList<>();
         for (int i = 8; i < nodeList.getLength(); i++) {
-            String textContent = nodeList.item(i).getTextContent();
-            if (textContent.contains("_")) {
-                System.out.println("0");
+            textContent = nodeList.item(i).getTextContent();
+            if (textContent.contains("_") || textContent == "") {
+                contrato.setProveedores_consultados(0);
+                continue;
+            }
+            data.add(nodeList.item(i));
+            if (textContent.toLowerCase().contains("menor") || textContent.toLowerCase().contains("abierto") || textContent.toLowerCase().contains("basado") || textContent.toLowerCase().contains("adjudicación") || textContent.toLowerCase().contains("negociado")) {
                 continue;
             }
 
-            if (textContent.contains("MENOR")) {
-                System.out.println("--------------------");
-                continue;
-            }
+            // this need fix
+            contrato.setNif(data.get(0).toString());
+            contrato.setAdjudicatario(data.get(1).toString());
+            contrato.setObjeto_generico(data.get(2).toString());
+            contrato.setObjeto(data.get(3).toString());
+            contrato.setFecha_adjudicacion(data.get(4).toString());
+            contrato.setImporte(data.get(5).toString());
+            System.out.println(textContent);
+            contrato.setProveedores_consultados(Integer.parseInt(data.get(6).toString()));
 
-            System.out.println(nodeList.item(i).getTextContent());
+            db.saveContrato(contrato);
 
+            data.removeAll(data);
+        }
+
+        ArrayList<Contrato> contratos = db.getAllContratos();
+        for (Contrato contrato1 : contratos) {
+            System.out.println(contrato1.getAdjudicatario());
         }
 
     }

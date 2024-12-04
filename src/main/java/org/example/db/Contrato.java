@@ -5,11 +5,15 @@ public class Contrato {
     private String nif;
     private String adjudicatario;
     private String objeto_generico;
+    private String objeto;
     private String fecha_adjudicacion;
-    private double importe;
+    private String importe;
     private int proveedores_consultados;
 
-    public Contrato(int id, String nif, String adjudicatario, String objeto_generico, String fecha_adjudicacion, double importe, int proveedores_consultados) {
+    public Contrato() {
+    }
+
+    public Contrato(int id, String nif, String adjudicatario, String objeto_generico, String fecha_adjudicacion, String importe, int proveedores_consultados) {
         this.id = id;
         this.nif = nif;
         this.adjudicatario = adjudicatario;
@@ -43,11 +47,11 @@ public class Contrato {
         this.fecha_adjudicacion = fecha_adjudicacion;
     }
 
-    public double getImporte() {
+    public String getImporte() {
         return importe;
     }
 
-    public void setImporte(double importe) {
+    public void setImporte(String importe) {
         this.importe = importe;
     }
 
@@ -65,5 +69,13 @@ public class Contrato {
 
     public void setNif(String nif) {
         this.nif = nif;
+    }
+
+    public String getObjeto() {
+        return objeto;
+    }
+
+    public void setObjeto(String objeto) {
+        this.objeto = objeto;
     }
 }
