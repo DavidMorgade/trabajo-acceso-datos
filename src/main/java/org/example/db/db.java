@@ -32,6 +32,7 @@ public class db {
         Connection conn = this.connect();
         String sql = "CREATE TABLE IF NOT EXISTS contratos (\n"
                 + " id SERIAL PRIMARY KEY,\n"
+                + " nif VARCHAR(255) NOT NULL,\n"
                 + " adjudicatario VARCHAR(255) NOT NULL,\n"
                 + " objeto_generico VARCHAR(255) NOT NULL,\n"
                 + " fecha_adjudicacion VARCHAR(255) NOT NULL,\n"
@@ -60,7 +61,7 @@ public class db {
         try {
             ResultSet rs = conn.createStatement().executeQuery(sql);
             while (rs.next()) {
-                contrato = new Contrato(rs.getString("adjudicatario"), rs.getString("objeto_generico"), rs.getString("fecha_adjudicacion"), rs.getDouble("importe"), rs.getInt("proveedores_consultados"));
+                contrato = new Contrato(rs.getInt("id"), rs.getString("nif"), rs.getString("adjudicatario"), rs.getString("objeto_generico"), rs.getString("fecha_adjudicacion"), rs.getDouble("importe"), rs.getInt("proveedores_consultados"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -71,12 +72,13 @@ public class db {
                 e.printStackTrace();
             }
         }
+        System.out.println("Contrato retrieved successfully");
         return contrato;
     }
 
     public void saveContrato(Contrato contrato) {
         Connection conn = this.connect();
-        String sql = "INSERT INTO contratos(adjudicatario, objeto_generico, fecha_adjudicacion, importe, proveedores_consultados) VALUES ('" + contrato.getAdjudicatario() + "', '" + contrato.getObjeto_generico() + "', '" + contrato.getFecha_adjudicacion() + "', " + contrato.getImporte() + ", " + contrato.getProveedores_consultados() + ")";
+        String sql = "INSERT INTO contratos (nif, adjudicatario, objeto_generico, fecha_adjudicacion, importe, proveedores_consultados) VALUES ('" + contrato.getNif() + "', '" + contrato.getAdjudicatario() + "', '" + contrato.getObjeto_generico() + "', '" + contrato.getFecha_adjudicacion() + "', " + contrato.getImporte() + ", " + contrato.getProveedores_consultados() + ");";
         try {
             conn.createStatement().execute(sql);
             System.out.println("Contrato saved successfully");
@@ -89,5 +91,6 @@ public class db {
                 e.printStackTrace();
             }
         }
+        System.out.println("Contrato saved successfully");
     }
 }
