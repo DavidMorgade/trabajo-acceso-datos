@@ -28,8 +28,13 @@ main {
 }
 
 .contracts-section {
-    overflow-x: auto;
+    overflow-y: auto; /* Habilitar scroll vertical */
+    max-height: 400px; /* Ajusta la altura máxima según lo que necesites */
+    margin-bottom: 1em;
+    border: 1px solid #ddd; /* Opcional: bordes para visualizar mejor */
+    background-color: #ffffff; /* Opcional: fondo blanco para la tabla */
 }
+
 
 table {
     width: 100%;

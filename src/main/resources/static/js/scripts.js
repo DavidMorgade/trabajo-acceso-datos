@@ -30,10 +30,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     searchInput.addEventListener('input', function () {
         const query = searchInput.value.toLowerCase();
-        const filteredContracts = contracts.filter(contract =>
-            Object.values(contract).some(value => value.toLowerCase().includes(query))
-        );
-        renderContracts(filteredContracts);
+        const filteredContracts = contracts.filter(contract => {
+            return Object.values(contract).some(value => {
+                if (typeof value === 'number') {
+                    return value.toString().includes(query);
+                }
+                return value.toLowerCase().includes(query);
+            });
+        });
+        setTimeout(() => {
+            renderContracts(filteredContracts);
+        }, 500);
     });
 
     downloadBtn.addEventListener('click', function () {
