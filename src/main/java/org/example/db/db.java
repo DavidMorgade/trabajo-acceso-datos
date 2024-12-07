@@ -36,8 +36,9 @@ public class db {
                 + " nif VARCHAR(255) NOT NULL,\n"
                 + " adjudicatario VARCHAR(255) NOT NULL,\n"
                 + " objeto_generico VARCHAR(255) NOT NULL,\n"
+                + " objeto VARCHAR(255) NOT NULL,\n"
                 + " fecha_adjudicacion VARCHAR(255) NOT NULL,\n"
-                + " importe DOUBLE PRECISION NOT NULL,\n"
+                + " importe VARCHAR(255) NOT NULL,\n"
                 + " proveedores_consultados INTEGER\n"  // Changed from NUMBER to INTEGER
                 + ");";
 
@@ -81,10 +82,9 @@ public class db {
 
     public void saveContrato(Contrato contrato) {
         Connection conn = this.connect();
-        String sql = "INSERT INTO contratos (nif, adjudicatario, objeto_generico, fecha_adjudicacion, importe, proveedores_consultados) VALUES ('" + contrato.getNif() + "', '" + contrato.getAdjudicatario() + "', '" + contrato.getObjeto_generico() + "', '" + contrato.getFecha_adjudicacion() + "', " + contrato.getImporte() + ", " + contrato.getProveedores_consultados() + ");";
         try {
+            String sql = "INSERT INTO contratos (nif, adjudicatario, objeto_generico, objeto, fecha_adjudicacion, importe, proveedores_consultados) VALUES ('" + contrato.getNif() + "', '" + contrato.getAdjudicatario() + "', '" + contrato.getObjeto_generico() + "', '" + contrato.getObjeto() + "', '" + contrato.getFecha_adjudicacion() + "', '" + contrato.getImporte() + "', " + contrato.getProveedores_consultados() + ")";
             conn.createStatement().execute(sql);
-            System.out.println("Contrato saved successfully");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

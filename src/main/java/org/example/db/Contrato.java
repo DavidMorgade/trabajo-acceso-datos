@@ -25,6 +25,16 @@ public class Contrato {
         this.proveedores_consultados = proveedores_consultados;
     }
 
+    public Contrato(String nif, String adjudicatario, String objeto_generico, String objeto, String fecha_adjudicacion, String importe, int proveedores_consultados) {
+        this.nif = nif;
+        this.adjudicatario = adjudicatario;
+        this.objeto_generico = objeto_generico;
+        this.objeto = objeto;
+        this.fecha_adjudicacion = fecha_adjudicacion;
+        this.importe = importe;
+        this.proveedores_consultados = proveedores_consultados;
+    }
+
     public String getAdjudicatario() {
         return adjudicatario;
     }
@@ -82,6 +92,7 @@ public class Contrato {
     }
 
 
+    @Override
     public String toString() {
         return "Contrato{" +
                 "id=" + id +

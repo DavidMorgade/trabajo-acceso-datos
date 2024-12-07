@@ -22,11 +22,14 @@ public class xmlParser {
     static db db = new db();
 
 
-    public static void main(String[] args) {
+    public xmlParser() {
+        this.createDocument();
+    }
 
-        xmlParser xmlParser = new xmlParser();
+    public void saveContratosToDB() {
 
-        Document document = xmlParser.getDocument();
+
+        Document document = this.getDocument();
 
         document.getDocumentElement().normalize();
 
@@ -53,25 +56,14 @@ public class xmlParser {
                 } else {
                     proveedores_consultados = Integer.parseInt(data.get(6).toString());
                 }
-                contrato = new Contrato(i, data.get(0).toString(), data.get(1).toString(), data.get(2).toString(), data.get(3).toString(), data.get(4).toString(), data.get(5).toString(), proveedores_consultados);
-                System.out.println(contrato);
+                contrato = new Contrato(data.get(0).toString(), data.get(1).toString(), data.get(2).toString(), data.get(3).toString(), data.get(4).toString(), data.get(5).toString(), proveedores_consultados);
+                db.saveContrato(contrato);
                 data.removeAll(data);
                 continue;
             }
-
             data.add(textContent);
-
         }
 
-        ArrayList<Contrato> contratos = db.getAllContratos();
-        for (Contrato contrato1 : contratos) {
-            System.out.println(contrato1.getAdjudicatario());
-        }
-
-    }
-
-    public xmlParser() {
-        this.createDocument();
     }
 
     private void createDocument() {

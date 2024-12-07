@@ -1,14 +1,15 @@
 package org.example;
 
 
-import org.example.db.db;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import xml.xmlParser;
 
 @SpringBootApplication
 public class Main {
     public static void main(String[] args) {
-        db db = new db();
+        xmlParser xmlParser = new xmlParser();
+        xmlParser.saveContratosToDB();
         SpringApplication.run(Main.class, args);
     }
 }

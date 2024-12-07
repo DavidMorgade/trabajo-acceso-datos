@@ -2,28 +2,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('search');
     const contractsTable = document.getElementById('contracts-table').getElementsByTagName('tbody')[0];
     const downloadBtn = document.getElementById('download-btn');
+    let contracts = [];
 
-    // Sample data for demonstration
-    const contracts = [
-        {
-            NIF: '12345678A',
-            Adjudicatario: 'Company A',
-            ObjetoGenerico: 'Service',
-            Objeto: 'Consulting',
-            Fecha: '2023-01-01',
-            Importe: '1000',
-            Proveedores: '3'
-        },
-        {
-            NIF: '87654321B',
-            Adjudicatario: 'Company B',
-            ObjetoGenerico: 'Product',
-            Objeto: 'Software',
-            Fecha: '2023-02-01',
-            Importe: '2000',
-            Proveedores: '5'
-        }
-    ];
+    // Sacamos la informacion de nuestro propio backend utilizando fetch a '/api/contratos'
+    function fetchContracts() {
+        fetch('/api/contratos')
+            .then(response => response.json())
+            .then(data => {
+                contracts = data;
+                renderContracts(contracts);
+            });
+    }
+
+    fetchContracts();
+
 
     function renderContracts(data) {
         contractsTable.innerHTML = '';
@@ -48,6 +40,4 @@ document.addEventListener('DOMContentLoaded', function () {
         // Logic to download XML from backend
     });
 
-    // Initial render
-    renderContracts(contracts);
 });
