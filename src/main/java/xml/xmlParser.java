@@ -32,16 +32,23 @@ public class xmlParser {
 
 
         NodeList nodeList = document.getElementsByTagName("Data");
-
         String textContent;
         Contrato contrato;
         ArrayList<Object> data = new ArrayList<>();
         for (int i = 8; i < nodeList.getLength(); i++) {
             textContent = nodeList.item(i).getTextContent();
+            // Con este check nos aseguramos que el bucle se rompa y lea la siguiente fila de datos del XML
+            // ya que no se encuentra bien formateado estos datos y nos rompe la lógica de la aplicación
+            // el motivo es porque aparecen el nif junto al nombre en vez de estar separados por columnas
+            if (textContent.equals("A25027145 SERVICIOS MICROINFORMÁTICOS, S.A.")) {
+                i = i + 6;
+                continue;
+            }
 
-            if (textContent.toLowerCase().contains("menor") || textContent.toLowerCase().contains("abierto") || textContent.toLowerCase().contains("basado") || textContent.toLowerCase().contains("adjudicación") || textContent.toLowerCase().contains("negociado")) {
+            if (textContent.toLowerCase().contains("menor") || textContent.toLowerCase().contains("abierto") || textContent.toLowerCase().contains("adjudicación") || textContent.toLowerCase().contains("negociado")) {
                 int proveedores_consultados;
-                if (data.get(6).equals("_")) {
+                // Comprobamos que el campo "Proveedores Consultados" no esté vacío o contenga un guión o una raya
+                if (data.get(6).equals("_") || data.get(6).equals("-") || data.get(6).equals("MATERIAL HOMOLOGADO")) {
                     proveedores_consultados = 0;
                 } else {
                     proveedores_consultados = Integer.parseInt(data.get(6).toString());
