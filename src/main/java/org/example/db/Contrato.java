@@ -4,6 +4,7 @@ public class Contrato {
     private int id;
     private String nif;
     private String adjudicatario;
+    private String ojbeto;
     private String objeto_generico;
     private String objeto;
     private String fecha_adjudicacion;
@@ -13,11 +14,12 @@ public class Contrato {
     public Contrato() {
     }
 
-    public Contrato(int id, String nif, String adjudicatario, String objeto_generico, String fecha_adjudicacion, String importe, int proveedores_consultados) {
+    public Contrato(int id, String nif, String adjudicatario, String objeto_generico, String objeto, String fecha_adjudicacion, String importe, int proveedores_consultados) {
         this.id = id;
         this.nif = nif;
         this.adjudicatario = adjudicatario;
         this.objeto_generico = objeto_generico;
+        this.objeto = objeto;
         this.fecha_adjudicacion = fecha_adjudicacion;
         this.importe = importe;
         this.proveedores_consultados = proveedores_consultados;
@@ -77,5 +79,19 @@ public class Contrato {
 
     public void setObjeto(String objeto) {
         this.objeto = objeto;
+    }
+
+
+    public String toString() {
+        return "Contrato{" +
+                "id=" + id +
+                ", nif='" + nif + '\'' +
+                ", adjudicatario='" + adjudicatario + '\'' +
+                ", objeto_generico='" + objeto_generico + '\'' +
+                ", objeto='" + objeto + '\'' +
+                ", fecha_adjudicacion='" + fecha_adjudicacion + '\'' +
+                ", importe='" + importe + '\'' +
+                ", proveedores_consultados=" + proveedores_consultados +
+                '}';
     }
 }

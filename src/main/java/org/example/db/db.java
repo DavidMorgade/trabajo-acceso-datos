@@ -63,7 +63,7 @@ public class db {
         try {
             ResultSet rs = conn.createStatement().executeQuery(sql);
             while (rs.next()) {
-                contrato = new Contrato(rs.getInt("id"), rs.getString("nif"), rs.getString("adjudicatario"), rs.getString("objeto_generico"), rs.getString("fecha_adjudicacion"), rs.getString("importe"), rs.getInt("proveedores_consultados"));
+                contrato = new Contrato(rs.getInt("id"), rs.getString("nif"), rs.getString("adjudicatario"), rs.getString("objeto"), rs.getString("objeto_generico"), rs.getString("fecha_adjudicacion"), rs.getString("importe"), rs.getInt("proveedores_consultados"));
                 contratos.add(contrato);
             }
         } catch (SQLException e) {

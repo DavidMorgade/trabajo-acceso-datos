@@ -34,32 +34,26 @@ public class xmlParser {
         NodeList nodeList = document.getElementsByTagName("Data");
 
         String textContent;
-        Contrato contrato = new Contrato();
+        Contrato contrato;
         ArrayList<Object> data = new ArrayList<>();
         for (int i = 8; i < nodeList.getLength(); i++) {
             textContent = nodeList.item(i).getTextContent();
-            if (textContent.contains("_") || textContent == "") {
-                contrato.setProveedores_consultados(0);
-                continue;
-            }
-            data.add(nodeList.item(i));
+
             if (textContent.toLowerCase().contains("menor") || textContent.toLowerCase().contains("abierto") || textContent.toLowerCase().contains("basado") || textContent.toLowerCase().contains("adjudicación") || textContent.toLowerCase().contains("negociado")) {
+                int proveedores_consultados;
+                if (data.get(6).equals("_")) {
+                    proveedores_consultados = 0;
+                } else {
+                    proveedores_consultados = Integer.parseInt(data.get(6).toString());
+                }
+                contrato = new Contrato(i, data.get(0).toString(), data.get(1).toString(), data.get(2).toString(), data.get(3).toString(), data.get(4).toString(), data.get(5).toString(), proveedores_consultados);
+                System.out.println(contrato);
+                data.removeAll(data);
                 continue;
             }
 
-            // this need fix
-            contrato.setNif(data.get(0).toString());
-            contrato.setAdjudicatario(data.get(1).toString());
-            contrato.setObjeto_generico(data.get(2).toString());
-            contrato.setObjeto(data.get(3).toString());
-            contrato.setFecha_adjudicacion(data.get(4).toString());
-            contrato.setImporte(data.get(5).toString());
-            System.out.println(textContent);
-            contrato.setProveedores_consultados(Integer.parseInt(data.get(6).toString()));
+            data.add(textContent);
 
-            db.saveContrato(contrato);
-
-            data.removeAll(data);
         }
 
         ArrayList<Contrato> contratos = db.getAllContratos();
