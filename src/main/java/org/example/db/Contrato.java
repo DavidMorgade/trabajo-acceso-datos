@@ -1,14 +1,24 @@
 package org.example.db;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+
+
 public class Contrato {
+    @JacksonXmlProperty(isAttribute = true)
     private int id;
+    @JacksonXmlProperty
     private String nif;
+    @JacksonXmlProperty
     private String adjudicatario;
-    private String ojbeto;
-    private String objeto_generico;
+    @JacksonXmlProperty
     private String objeto;
+    @JacksonXmlProperty
+    private String objeto_generico;
+    @JacksonXmlProperty
     private String fecha_adjudicacion;
+    @JacksonXmlProperty
     private String importe;
+    @JacksonXmlProperty
     private int proveedores_consultados;
 
     public Contrato() {
@@ -33,6 +43,10 @@ public class Contrato {
         this.fecha_adjudicacion = fecha_adjudicacion;
         this.importe = importe;
         this.proveedores_consultados = proveedores_consultados;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getAdjudicatario() {
